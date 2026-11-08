@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mohd Ahmed — AI Automation Engineer</title>
+<meta name="description" content="n8n workflows with LLMs, APIs and JavaScript, with validation and human checkpoints built in.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3f5f9;--surface:#ffffff;--ink:#16213a;--muted:#55607a;--line:#d6dbe6;
+  --blue:#2450f0;--blue-ink:#ffffff;--ok:#0f7b4f;--ok-bg:#dff4ea;--warn:#8a5200;--warn-bg:#ffe9c2;--bad:#a3232f;--bad-bg:#fbdadd;--code:#eef1f8;
+  --display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --body:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1526;--surface:#182038;--ink:#e8ecf7;--muted:#9aa5c2;--line:#2b3555;
+    --blue:#7d9bff;--blue-ink:#0f1526;--ok:#6fe0ac;--ok-bg:#12382b;--warn:#ffcf7a;--warn-bg:#3d2d0c;--bad:#ff9aa3;--bad-bg:#40181d;--code:#111830;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1526;--surface:#182038;--ink:#e8ecf7;--muted:#9aa5c2;--line:#2b3555;
+  --blue:#7d9bff;--blue-ink:#0f1526;--ok:#6fe0ac;--ok-bg:#12382b;--warn:#ffcf7a;--warn-bg:#3d2d0c;--bad:#ff9aa3;--bad-bg:#40181d;--code:#111830;
+  color-scheme:dark;
+}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;gap:16px;flex-wrap:wrap}
+nav .name{display:flex;align-items:center;gap:12px;font:800 20px var(--display);text-decoration:none}
+.avatar{width:42px;height:42px;border-radius:50%;background:var(--blue);color:var(--blue-ink);display:grid;place-items:center;font:800 15px var(--display)}
+nav ul{display:flex;gap:22px;list-style:none;margin:0;padding:0;font-weight:500}
+nav ul a{text-decoration:none;color:var(--muted)}
+nav ul a:hover{color:var(--ink)}
+.hero{display:grid;grid-template-columns:1.05fr 1fr;gap:48px;align-items:start;padding:40px 0 72px}
+h1{font:800 clamp(2.3rem,5vw,3.7rem)/1.04 var(--display);letter-spacing:-.025em;margin:0 0 22px}
+.lede{font-size:1.15rem;color:var(--muted);max-width:34em;margin:0 0 28px}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;padding:13px 22px;border-radius:10px;font-weight:700;text-decoration:none;border:2px solid var(--blue)}
+.btn.primary{background:var(--blue);color:var(--blue-ink)}
+.btn.ghost{color:var(--ink);border-color:var(--line)}
+.btn:hover{border-color:var(--ink)}
+.facts{margin:26px 0 0;padding:0;list-style:none;color:var(--muted);font-size:.95rem}
+.facts li+li{margin-top:4px}
+
+.demo{background:var(--surface);border:2px solid var(--ink);border-radius:14px;padding:22px}
+.demo h2{font:700 1.05rem var(--display);margin:0 0 4px}
+.demo p.sub{margin:0 0 14px;color:var(--muted);font-size:.92rem}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.chips button{font:500 .85rem var(--body);padding:7px 13px;border-radius:999px;border:1.5px solid var(--line);background:transparent;color:var(--ink);cursor:pointer}
+.chips button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.label{font:500 .8rem var(--body);color:var(--muted);margin:10px 0 4px}
+pre{margin:0;background:var(--code);border-radius:8px;padding:12px 14px;font:400 .82rem/1.55 var(--mono);white-space:pre-wrap;word-break:break-word;min-height:3.4em}
+.run{margin-top:14px;width:100%;cursor:pointer;font:700 1rem var(--body);padding:12px;border-radius:10px;border:0;background:var(--blue);color:var(--blue-ink)}
+.run:hover{filter:brightness(1.08)}
+#steps{list-style:none;margin:0;padding:0;font-size:.92rem}
+#steps li{display:flex;gap:10px;padding:5px 0;border-bottom:1px solid var(--line)}
+#steps li:last-child{border-bottom:0}
+#steps .m{flex:none;width:1.2em;font-weight:700}
+#steps .pass .m{color:var(--ok)}#steps .fail .m{color:var(--bad)}
+#verdict{margin-top:12px;padding:12px 14px;border-radius:8px;font-weight:700;font-size:.95rem}
+.v-ok{background:var(--ok-bg);color:var(--ok)}.v-warn{background:var(--warn-bg);color:var(--warn)}.v-bad{background:var(--bad-bg);color:var(--bad)}
+.note{font-size:.8rem;color:var(--muted);margin:12px 0 0}
+
+.rule{display:grid;grid-template-columns:repeat(4,1fr);border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);margin:0 0 8px}
+.rule div{padding:22px 18px;border-left:1px solid var(--line);font:800 clamp(1.05rem,2.2vw,1.45rem)/1.15 var(--display);letter-spacing:-.01em}
+.rule div:first-child{border-left:0;padding-left:0}
+.rule small{display:block;margin-top:8px;font:400 .85rem/1.4 var(--body);color:var(--muted);letter-spacing:0}
+
+section{padding:64px 0;border-top:1px solid var(--line)}
+section.first{border-top:0}
+h2.t{font:800 clamp(1.8rem,3.4vw,2.4rem)/1.1 var(--display);letter-spacing:-.02em;margin:0 0 10px}
+.intro{color:var(--muted);max-width:38em;margin:0 0 28px}
+.proj{display:grid;grid-template-columns:1fr 1.4fr;gap:10px 40px;padding:26px 0;border-top:1px solid var(--line)}
+.proj h3{font:700 1.3rem var(--display);margin:0 0 6px}
+.proj .stack{color:var(--muted);font:400 .82rem var(--mono);margin:0 0 10px}
+.proj p{margin:0}
+.flow{display:flex;flex-wrap:wrap;gap:6px 0;align-items:center;margin:12px 0 0;padding:0;list-style:none;font-weight:500;font-size:.86rem}
+.flow li:not(:last-child)::after{content:"\2192";margin:0 9px;color:var(--muted)}
+.flow span{background:var(--code);padding:3px 10px;border-radius:6px}
+.badge{display:inline-block;font-size:.82rem;font-weight:500;padding:3px 10px;border-radius:6px;background:var(--warn-bg);color:var(--warn)}
+.badge.live{background:var(--ok-bg);color:var(--ok);font-weight:700}
+.proj.client{background:var(--surface);border:2px solid var(--ok);border-radius:14px;padding:24px;margin:6px 0}
+dl.skills{display:grid;grid-template-columns:200px 1fr;gap:14px 28px;margin:0}
+dl.skills dt{font:700 1.05rem var(--display)}
+dl.skills dd{margin:0;color:var(--muted)}
+.cols{display:grid;grid-template-columns:1.2fr 1fr;gap:48px}
+.path{list-style:none;margin:0;padding:0 0 0 22px;border-left:2px solid var(--line)}
+.path li{position:relative;padding:0 0 26px 20px}
+.path li::before{content:"";position:absolute;left:-30px;top:8px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:3px solid var(--blue)}
+.path .when{font:500 .85rem var(--mono);color:var(--muted)}
+.path h3{font:700 1.1rem var(--display);margin:2px 0 4px}
+.path p{margin:0;color:var(--muted);max-width:40em;font-size:.97rem}
+.side h3{font:700 1.1rem var(--display);margin:0 0 8px}
+.side ul{margin:0 0 28px;padding-left:18px;color:var(--muted);font-size:.97rem}
+.side li{margin-bottom:6px}
+.contact{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+footer{padding:36px 0 48px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+
+@media (max-width:860px){
+  .hero{grid-template-columns:1fr;gap:36px}
+  .proj{grid-template-columns:1fr}
+  .rule{grid-template-columns:1fr 1fr}
+  .rule div{border-top:1px solid var(--line)}
+  .rule div:nth-child(odd){border-left:0;padding-left:0}
+  dl.skills{grid-template-columns:1fr;gap:4px}
+  dl.skills dd{margin-bottom:14px}
+  .cols{grid-template-columns:1fr;gap:12px}
+  body{font-size:16px}
+}
+[hidden]{display:none!important}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a class="name" href="#top">Mohd Ahmed</a>
+    <ul>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#path">Background</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero" id="top">
+    <div>
+      <h1>I build AI workflows that check the AI’s work before anything happens.</h1>
+      <p class="lede">I’m an AI automation engineer building reliable GTM, RevOps and business workflows with n8n, LLMs and APIs. The model reads the messy input. Code and business rules make the decision. A person stays in the loop where it matters.</p>
+      <div class="btns">
+        <a class="btn primary" href="#projects">See my workflows</a>
+        <a class="btn ghost" href="https://wa.me/918588918460?text=Hi%20Mohd%2C%20I%20saw%20your%20portfolio." target="_blank" rel="noopener">WhatsApp me</a>
+      </div>
+      <ul class="facts">
+        <li>Ex-Cognizant software engineer · 14 workflows built · 1 live client</li>
+        <li>Immediate joiner · New Delhi, India · Open to remote</li>
+      </ul>
+    </div>
+
+    <div class="demo" aria-labelledby="demo-title">
+      <h2 id="demo-title">Try the idea: validate an LLM answer</h2>
+      <p class="sub">A simplified version of the check in my invoice auditor. Pick an output, then run it.</p>
+      <div class="chips" id="picks" role="group" aria-label="Sample LLM outputs">
+        <button type="button" data-i="0" aria-pressed="true">Clean answer</button>
+        <button type="button" data-i="1" aria-pressed="false">Wrapped in Markdown</button>
+        <button type="button" data-i="2" aria-pressed="false">Not JSON at all</button>
+      </div>
+      <div class="label">What the model returned</div>
+      <pre id="raw"></pre>
+      <button class="run" type="button" id="run">Run validation</button>
+      <div class="label">What the workflow does</div>
+      <ol id="steps" aria-live="polite"><li><span class="m"></span><span>Waiting to run.</span></li></ol>
+      <div id="verdict" aria-live="polite" hidden></div>
+      <p class="note">Rule used here: under $1,000 is approved automatically, anything else waits for a person.</p>
+    </div>
+  </header>
+
+  <div class="rule" aria-label="How every workflow is built">
+    <div>LLM understands.<small>Reads messy emails, contracts, sites and invoices.</small></div>
+    <div>Code validates.<small>Cleans, checks and scores the output.</small></div>
+    <div>Rules decide.<small>Fixed thresholds, so the same input gives the same result.</small></div>
+    <div>n8n orchestrates.<small>Webhooks, APIs, databases, Slack and Gmail.</small></div>
+  </div>
+
+  <section id="projects">
+    <h2 class="t">Workflows I’ve built</h2>
+    <p class="intro">Each one ties to a real business problem. Where a project runs on mock or sample data, I say so.</p>
+    <div class="chips" id="filters" role="group" aria-label="Filter projects">
+      <button type="button" data-f="all" aria-pressed="true">All 14</button>
+      <button type="button" data-f="client" aria-pressed="false">Live client</button>
+      <button type="button" data-f="sales" aria-pressed="false">Sales and RevOps</button>
+      <button type="button" data-f="fin" aria-pressed="false">Finance</button>
+      <button type="button" data-f="it" aria-pressed="false">IT and security</button>
+      <button type="button" data-f="ops" aria-pressed="false">Ops and HR</button>
+    </div>
+    <div id="list"></div>
+  </section>
+
+  <section id="skills">
+    <h2 class="t">What I work with</h2>
+    <p class="intro">Still learning and still breaking things on purpose to see where they fail.</p>
+    <dl class="skills">
+      <dt>Automation</dt><dd>n8n, webhooks, REST APIs (authentication, headers, request bodies, retries), JSON transformation, idempotency and duplicate handling, Gmail, Google Sheets, Drive and Slack integrations</dd>
+      <dt>AI and LLMs</dt><dd>Gemini, OpenAI, Groq, prompt engineering, LangChain, RAG pipelines, AI agents, Pinecone, FAISS, Hugging Face</dd>
+      <dt>Code and data</dt><dd>JavaScript, Python, Java, Spring Boot, FastAPI, SQL, MySQL, PostgreSQL, AWS</dd>
+    </dl>
+  </section>
+
+  <section id="path">
+    <h2 class="t">How I got here</h2>
+    <p class="intro">Backend engineering first, then a move into AI automation.</p>
+    <div class="cols">
+      <ol class="path">
+        <li><span class="when">Dec 2021 – Dec 2022</span><h3>Software Engineer Trainee, Cognizant</h3><p>Built a job portal end to end: registration, job posting and search for job seekers and employers.</p></li>
+        <li><span class="when">Jan 2023 – Mar 2024</span><h3>Junior Software Engineer, Cognizant</h3><p>Backend services in Java, Spring Boot and MySQL on AWS. Debugged integrations, wrote business logic and handled data validation.</p></li>
+        <li><span class="when">Jul 2025 – Nov 2025</span><h3>Java Developer, Jarurat Care Foundation</h3><p>Core Java development, debugging and user support.</p></li>
+        <li><span class="when">Nov 2025 – May 2026</span><h3>Generative AI and LLM Engineering program, SS AI Training Institute</h3><p>LLMs, RAG pipelines, AI agents and vector databases. Built PDF question answering and chatbot projects.</p></li>
+        <li><span class="when">Now</span><h3>Building automation for real problems</h3><p>Moving from prototypes toward live client work, with testing and error handling.</p></li>
+      </ol>
+      <div class="side">
+        <h3>Education</h3>
+        <ul>
+          <li>M.Tech, Computer Science, AKTU Lucknow (2024 – 2026)</li>
+          <li>B.Tech, Computer Science and Engineering, Jamia Hamdard (2017 – 2021)</li>
+        </ul>
+        <h3>Certifications</h3>
+        <ul>
+          <li>Java Developer Internship Certificate</li>
+          <li>Batch Processing with Spring Batch and Spring Boot</li>
+          <li>Learn to Code in Python 3: Beginner to Advanced</li>
+          <li>DeepSeek Mastery: Learn, Automate Tasks, Write Code and More</li>
+          <li>ChatGPT Complete Guide: Learn Midjourney, ChatGPT 4 and More</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2 class="t">Let’s talk</h2>
+    <p class="intro">If your team is hiring for AI automation, n8n or workflow work, or you have a manual process eating your team’s time, I’d like to hear about it. I’m happy to walk you through how any of these workflows is built.</p>
+    <div class="contact">
+      <a class="btn primary" href="https://wa.me/918588918460?text=Hi%20Mohd%2C%20I%20saw%20your%20portfolio." target="_blank" rel="noopener">Chat on WhatsApp</a>
+      <a class="btn ghost" href="mailto:ahmedsaifi756@gmail.com">ahmedsaifi756@gmail.com</a>
+      <a class="btn ghost" href="https://wa.me/918588918460?text=Hi%20Mohd%2C%20I%20saw%20your%20portfolio." target="_blank" rel="noopener">Chat on WhatsApp</a>
+      <a class="btn ghost" href="https://www.linkedin.com/in/mohdahmed-30903920a" target="_blank" rel="noopener">Message me on LinkedIn</a>
+    </div>
+  </section>
+
+  <footer>© 2026 Mohd Ahmed</footer>
+</div>
+
+<script>
+(function(){
+  var P=[
+   {t:"Maktab fee reminder",c:"ops client",s:"n8n · Google Sheets · JavaScript · Gmail",b:["live","Running on a trial basis with a real client"],x:"A local Maktab was checking a sheet and reminding parents about pending fees by hand every day. Every morning at 10 AM the workflow reads the student sheet. If fees are pending, the admin gets a summary and parents get their own message. If nothing is pending, nobody is bothered.",f:"Schedule|Read sheet|Check pending|Build message|Send"},
+   {t:"Invoice auditor",c:"fin",s:"n8n · Gemini · JavaScript · Google Sheets · Gmail",x:"Extracts vendor, amount and category from unstructured invoices. The validation step strips Markdown, cleans currency values and handles different key names. Invoices under $1,000 are approved. Others are marked Pending and management gets an email with the AI’s reasoning.",f:"Extract|Validate|Decide|Approve or escalate"},
+   {t:"Payment reconciliation",c:"fin",s:"n8n · JavaScript · Gemini · Google Sheets · Slack",x:"JavaScript calculates the exact variance against the ledger, so no LLM touches the math. Gemini only classifies the mismatch, such as a gateway fee or partial refund. Under 5% is reconciled automatically. Larger gaps are escalated to the finance manager on Slack with the AI’s reasoning.",f:"Catch payout|Calculate variance|AI triage|Route|Log"},
+   {t:"E-commerce profit and inventory gatekeeper",c:"fin",s:"n8n · Gemini · JavaScript · Google Sheets · Slack · Gmail",b:["","Uses sample data through a webhook, not a live Shopify or Meta connection"],x:"Joins ad spend, sales and inventory by SKU. JavaScript calculates profit, ROAS and days of stock left. Each SKU becomes a stockout risk, a bleeding campaign or a scale winner. Only then does Gemini write the diagnosis and draft a restock order in Gmail.",f:"Merge data|Do the math|AI diagnosis|Route"},
+   {t:"IT access review and offboarding",c:"it",s:"n8n · FastAPI · PostgreSQL · JavaScript · LLM",b:["","Prototype"],x:"When an employee leaves, the workflow pulls their access data, checks it against policy and has an LLM rate how risky it is. The AI never revokes anything. Deterministic rules and a human approval step control that. Duplicate events are caught so access is never revoked twice.",f:"Event|Idempotency check|Policy check|Risk analysis|Human review|Revoke|Audit"},
+   {t:"SaaS license optimization",c:"it",s:"n8n · JavaScript · PostgreSQL · Slack",b:["","Uses simulated SaaS data over REST"],x:"Matches license data with usage data by user and software. Active licenses are marked KEEP, inactive for 60+ days are flagged for REVIEW, and missing data becomes DATA_CHECK instead of being assumed unused. It never revokes access automatically.",f:"Retrieve|Reconcile|Validate|Decide|Persist|Notify"},
+   {t:"Natural language to cloud provisioning",c:"it",s:"n8n · Gemini · JavaScript · Webhooks · REST API · Google Sheets",b:["","Runs against a mock cloud API, not real AWS"],x:"Turns “Create a demo environment for TechCorp, we need S3 and Lambda, this is urgent” into a validated request. It checks Google Sheets for existing environments first, so the same one is never provisioned twice.",f:"Understand|Validate|Check state|Provision"},
+   {t:"Grounded sales and compliance gatekeeper",c:"sales",s:"n8n · Gemini · JavaScript · Slack · Gmail",x:"Breaks a prospect’s message into claims and checks each against the company playbook as SUPPORTED, CONFLICT or MISSING_EVIDENCE. A claim needs an exact quote as proof, or code downgrades it. Conflicts go to the Deal Desk on Slack. Clean ones become a Gmail draft for the rep.",f:"Load playbook|Extract claims|Validate evidence|Route"},
+   {t:"Lead enrichment and qualification",c:"sales",s:"n8n · Gemini · JavaScript · PostgreSQL · Slack · Gmail",x:"Fetches a lead’s company site and Gemini extracts budget, team size, urgency and ICP fit. A fixed JavaScript rubric does the scoring, so the same lead always gets the same score. At 75 or above, the sales team gets a research brief and a personalized Gmail draft.",f:"Scrape site|Extract signals|Score|Store and draft"},
+   {t:"Lead intake and CRM routing",c:"sales",s:"n8n · LLM · JavaScript · REST APIs · PostgreSQL · Slack",x:"Reads an incoming lead, validates the extracted details and qualifies it with rules. Then it searches the CRM by email, updates or creates the contact, logs an audit record and pings Slack. Built to practice authentication, duplicate detection, status codes and retry logic.",f:"Understand|Validate|Qualify|CRM match|Notify"},
+   {t:"Revenue signal scoring",c:"sales",s:"n8n · Gemini · JavaScript · PostgreSQL · HTTP requests",b:["","Prototype: mock endpoint, and the score thresholds are still my best guess"],x:"Turns messy customer activity, like repeated pricing page visits or an upcoming renewal, into a “call this account first” priority. JavaScript calculates a weighted score. PostgreSQL stores every event and catches duplicates so one visit is never counted three times.",f:"Extract|Validate|Score|Route"},
+   {t:"Support ticket triage",c:"ops",s:"n8n · Gemini · JavaScript · Slack · Gmail · Google Sheets",x:"Extracts category, sentiment and urgency from a customer email, then validates it and generates a ticket ID. Routine tickets get an AI-drafted reply saved in Gmail. Angry customers or urgency above 7 are logged in Sheets and alerted to the right team on Slack.",f:"Understand|Validate|Route|Draft or escalate"},
+   {t:"Resume screening",c:"ops",s:"n8n · Gemini · JavaScript · Gmail · Drive · Sheets · Slack",x:"Converts resume PDFs from Gmail to text and has Gemini compare them with the job description. JavaScript calculates a weighted score. At 75% or above, the resume moves to Shortlisted and the hiring manager gets a Slack ping. Otherwise a rejection is drafted for HR to review.",f:"Extract|Evaluate|Validate|Score|Route"},
+   {t:"Contract renewal risk",c:"ops",s:"n8n · AI · JavaScript · PostgreSQL · Slack",x:"AI extracts renewal dates and notice periods from contract data. Validation cleans the output, then code calculates notice deadlines and days remaining. Each contract becomes URGENT_REVIEW, MONITOR or NO_ACTION, and Slack is pinged only for urgent ones.",f:"Extract|Validate|Calculate risk|Log|Notify"}
+  ];
+  var list=document.getElementById('list');
+  function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
+  P.forEach(function(p){
+    var a=document.createElement('article');a.className='proj'+(p.c.indexOf('client')>-1?' client':'');a.dataset.c=p.c;
+    var badge=p.b?'<p style="margin-top:8px"><span class="badge '+(p.b[0]||'')+'">'+esc(p.b[1])+'</span></p>':'';
+    a.innerHTML='<div><h3>'+esc(p.t)+'</h3><p class="stack">'+esc(p.s)+'</p>'+badge+'</div><div><p>'+esc(p.x)+'</p><ul class="flow">'+p.f.split('|').map(function(s){return '<li><span>'+esc(s)+'</span></li>'}).join('')+'</ul></div>';
+    list.appendChild(a);
+  });
+  document.getElementById('filters').addEventListener('click',function(e){
+    var b=e.target.closest('button');if(!b)return;var f=b.dataset.f;
+    [].forEach.call(this.children,function(x){x.setAttribute('aria-pressed',x===b)});
+    [].forEach.call(list.children,function(a){a.hidden=!(f==='all'||a.dataset.c.split(' ').indexOf(f)>-1)});
+  });
+
+  var samples=[
+    '{"vendor":"Bright Office Co","amount":"$420.50","category":"Supplies"}',
+    '```json\n{"Vendor": "Northwind Traders", "Amount": "USD 4,250.00", "Category": "Equipment"}\n```',
+    'Sure! Here is the invoice data you asked for: the vendor is Acme and the amount is about 900.'
+  ];
+  var cur=0,raw=document.getElementById('raw'),steps=document.getElementById('steps'),verdict=document.getElementById('verdict');
+  function show(){raw.textContent=samples[cur];steps.innerHTML='<li><span class="m"></span><span>Waiting to run.</span></li>';verdict.hidden=true}
+  function step(ok,text){var li=document.createElement('li');li.className=ok?'pass':'fail';li.innerHTML='<span class="m">'+(ok?'\u2713':'\u2717')+'</span><span></span>';li.lastChild.textContent=text;steps.appendChild(li)}
+  function end(cls,text){verdict.className=cls;verdict.textContent=text;verdict.hidden=false}
+  document.getElementById('picks').addEventListener('click',function(e){
+    var b=e.target.closest('button');if(!b)return;cur=+b.dataset.i;
+    [].forEach.call(this.children,function(x){x.setAttribute('aria-pressed',x===b)});show();
+  });
+  document.getElementById('run').addEventListener('click',function(){
+    steps.innerHTML='';verdict.hidden=true;
+    var t=samples[cur],cleaned=t.replace(/```json|```/g,'').trim();
+    step(true,cleaned!==t?'Removed Markdown fences around the JSON':'No Markdown to remove');
+    var obj;
+    try{obj=JSON.parse(cleaned)}catch(err){
+      step(false,'Could not parse the response as JSON');
+      step(true,'Did not guess or continue with bad data');
+      end('v-bad','Held for human review. Nothing was approved.');return;
+    }
+    step(true,'Parsed JSON successfully');
+    var n={};Object.keys(obj).forEach(function(k){n[k.toLowerCase()]=obj[k]});
+    step(true,'Normalised key names (vendor, amount, category)');
+    var amt=parseFloat(String(n.amount).replace(/[^0-9.]/g,''));
+    if(isNaN(amt)){step(false,'Amount is not a number');end('v-bad','Held for human review.');return}
+    step(true,'Cleaned the amount to a number: '+amt.toFixed(2));
+    if(amt<1000){step(true,'Rule check: under $1,000');end('v-ok','Approved for '+n.vendor+'. Database updated.')}
+    else{step(true,'Rule check: $1,000 or more');end('v-warn','Marked Pending. Management gets an email with the reasoning.')}
+  });
+  show();
+})();
+</script>
+</body>
+</html>
