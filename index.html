@@ -2,310 +2,293 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101310">
 <title>Mohd Ahmed — AI Automation Engineer</title>
-<meta name="description" content="n8n workflows with LLMs, APIs and JavaScript, with validation and human checkpoints built in.">
+<meta name="description" content="Mohd Ahmed builds reliable AI-powered business workflows with n8n, LLMs, APIs and deterministic controls.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#f3f5f9;--surface:#ffffff;--ink:#16213a;--muted:#55607a;--line:#d6dbe6;
-  --blue:#2450f0;--blue-ink:#ffffff;--ok:#0f7b4f;--ok-bg:#dff4ea;--warn:#8a5200;--warn-bg:#ffe9c2;--bad:#a3232f;--bad-bg:#fbdadd;--code:#eef1f8;
-  --display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
-  --body:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
-  color-scheme:light;
+  --bg:#101310;--surface:#171b17;--surface2:#1d231d;--ink:#f1f2e9;
+  --muted:#a1a99d;--soft:#737d70;--line:#30392f;--accent:#c4f36b;
+  --accent-ink:#17200d;--mono:"DM Mono",monospace;--sans:"DM Sans",sans-serif;
+  --display:"Manrope",sans-serif;--max:1120px;
 }
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){
-    --bg:#0f1526;--surface:#182038;--ink:#e8ecf7;--muted:#9aa5c2;--line:#2b3555;
-    --blue:#7d9bff;--blue-ink:#0f1526;--ok:#6fe0ac;--ok-bg:#12382b;--warn:#ffcf7a;--warn-bg:#3d2d0c;--bad:#ff9aa3;--bad-bg:#40181d;--code:#111830;
-    color-scheme:dark;
-  }
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.65 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+.wrap{width:min(var(--max),calc(100% - 48px));margin:auto}
+.topbar{height:76px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
+.brand{font:800 17px var(--display);letter-spacing:-.06em}
+.brand span{color:var(--accent)}
+.nav{display:flex;gap:30px;align-items:center;color:var(--muted);font-size:13px}
+.nav a:hover,.text-link:hover{color:var(--accent)}
+.nav .nav-cta{border:1px solid var(--line);padding:9px 15px;border-radius:3px;color:var(--ink)}
+.nav .nav-cta:hover{border-color:var(--accent);color:var(--accent)}
+.hero{padding:116px 0 92px;position:relative}
+.kicker,.eyebrow,.mono{font-family:var(--mono);text-transform:uppercase;letter-spacing:.12em;font-size:11px}
+.kicker{color:var(--accent);display:flex;align-items:center;gap:10px;margin:0 0 30px}
+.kicker:before{content:"";width:25px;height:1px;background:var(--accent)}
+h1{font:700 clamp(48px,8vw,88px)/.99 var(--display);letter-spacing:-.075em;max-width:950px;margin:0}
+h1 .accent{color:var(--accent)}
+.hero-bottom{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-top:42px}
+.intro{max-width:560px;color:var(--muted);font-size:18px;line-height:1.65;margin:0}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;flex-shrink:0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;padding:13px 18px;border:1px solid var(--line);border-radius:3px;font-size:13px;font-weight:700;transition:.2s ease}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn:hover{transform:translateY(-2px);border-color:var(--accent)}
+.btn.primary:hover{background:#d4ff83}
+.arrow{font-size:17px;line-height:1}
+.meta-strip{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.meta-item{padding:20px 18px 20px 0}
+.meta-item+.meta-item{border-left:1px solid var(--line);padding-left:24px}
+.meta-item strong{display:block;font:600 13px var(--display);margin-bottom:4px}
+.meta-item span{color:var(--soft);font:10px var(--mono);letter-spacing:.08em;text-transform:uppercase}
+section{padding:92px 0;border-bottom:1px solid var(--line)}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:34px}
+.eyebrow{color:var(--accent);margin:0 0 12px}
+h2{font:700 clamp(32px,4vw,48px)/1.05 var(--display);letter-spacing:-.06em;margin:0}
+.section-note{color:var(--muted);font-size:14px;max-width:360px;margin:0}
+.featured{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.project{background:var(--surface);border:1px solid var(--line);padding:25px 25px 23px;min-height:260px;display:flex;flex-direction:column;transition:border-color .2s,transform .2s}
+.project:hover{border-color:#64734e;transform:translateY(-3px)}
+.project-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:27px}
+.project-type{font:10px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.status{font:10px var(--mono);letter-spacing:.04em;color:var(--muted);border:1px solid var(--line);padding:5px 8px}
+.project h3{font:700 22px/1.15 var(--display);letter-spacing:-.04em;margin:0 0 12px}
+.project p{font-size:14px;line-height:1.65;color:var(--muted);margin:0 0 22px;max-width:52ch}
+.project-foot{margin-top:auto;padding-top:15px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:15px;align-items:center}
+.stack{font:10px/1.6 var(--mono);color:var(--soft);letter-spacing:.025em}
+.project-index{font:11px var(--mono);color:var(--soft)}
+.more-work{margin-top:20px;border:1px solid var(--line);background:transparent}
+.more-work summary{cursor:pointer;list-style:none;padding:18px 20px;display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:700}
+.more-work summary::-webkit-details-marker{display:none}
+.more-work summary span:last-child{color:var(--accent);font:11px var(--mono)}
+.more-work[open] summary{border-bottom:1px solid var(--line)}
+.compact-list{display:grid;grid-template-columns:repeat(2,1fr);gap:0 30px;padding:0 20px}
+.compact-item{padding:18px 0;border-bottom:1px solid var(--line)}
+.compact-item h4{font:600 15px var(--display);margin:0 0 5px}
+.compact-item p{font-size:12px;color:var(--muted);margin:0 0 7px;line-height:1.55}
+.compact-item span{font:10px var(--mono);color:var(--soft)}
+.principles{display:grid;grid-template-columns:1fr 1.15fr;gap:70px;align-items:start}
+.principle-copy{color:var(--muted);font-size:16px;max-width:440px}
+.principle-copy p{margin:20px 0 0}
+.flow{border-top:1px solid var(--line)}
+.flow-row{display:grid;grid-template-columns:36px 1fr auto;align-items:center;gap:15px;padding:18px 0;border-bottom:1px solid var(--line)}
+.flow-num{font:11px var(--mono);color:var(--accent)}
+.flow-row strong{font:600 15px var(--display)}
+.flow-row span:last-child{font:10px var(--mono);color:var(--soft);text-align:right}
+.capabilities{display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
+.cap h3{font:600 16px var(--display);margin:0 0 12px}
+.cap p{font-size:13px;color:var(--muted);margin:0;line-height:1.8}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px}
+.about-copy{font-size:15px;color:var(--muted);max-width:560px}
+.about-copy p{margin:0 0 16px}
+.timeline{border-top:1px solid var(--line)}
+.timeline-item{display:grid;grid-template-columns:125px 1fr;gap:18px;padding:16px 0;border-bottom:1px solid var(--line)}
+.timeline-item time{font:10px var(--mono);color:var(--soft);padding-top:4px}
+.timeline-item strong{display:block;font:600 14px var(--display)}
+.timeline-item span{font-size:12px;color:var(--muted)}
+.contact{padding:100px 0 90px}
+.contact-inner{display:flex;justify-content:space-between;align-items:flex-end;gap:40px}
+.contact h2{font-size:clamp(42px,6vw,68px);max-width:620px}
+.contact p{color:var(--muted);max-width:480px;margin:20px 0 0}
+.contact-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+footer{border-top:1px solid var(--line);padding:22px 0 30px;color:var(--soft);font:10px var(--mono);display:flex;justify-content:space-between;gap:20px}
+footer a:hover{color:var(--accent)}
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none;transition:none}*{transition:none!important}}
+@media(max-width:760px){
+ .wrap{width:min(100% - 36px,var(--max))}
+ .topbar{height:66px}.nav{gap:15px}.nav a:not(.nav-cta){display:none}
+ .hero{padding:82px 0 66px}.hero-bottom{display:block}.intro{font-size:16px}.hero-actions{margin-top:25px}
+ .meta-strip{grid-template-columns:repeat(2,1fr)}.meta-item:nth-child(3){border-left:0;padding-left:0;border-top:1px solid var(--line)}
+ .meta-item:nth-child(4){border-top:1px solid var(--line)}
+ section{padding:70px 0}.section-head{display:block}.section-note{margin-top:15px}
+ .featured{grid-template-columns:1fr}.project{min-height:230px}
+ .compact-list{grid-template-columns:1fr}
+ .principles,.about-grid{grid-template-columns:1fr;gap:35px}
+ .capabilities{grid-template-columns:1fr;gap:24px}
+ .contact-inner{display:block}.contact-actions{margin-top:25px}
+ footer{flex-direction:column}
 }
-:root[data-theme="dark"]{
-  --bg:#0f1526;--surface:#182038;--ink:#e8ecf7;--muted:#9aa5c2;--line:#2b3555;
-  --blue:#7d9bff;--blue-ink:#0f1526;--ok:#6fe0ac;--ok-bg:#12382b;--warn:#ffcf7a;--warn-bg:#3d2d0c;--bad:#ff9aa3;--bad-bg:#40181d;--code:#111830;
-  color-scheme:dark;
-}
-:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
-*,*::before,*::after{box-sizing:inherit}
-body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 var(--body);-webkit-font-smoothing:antialiased}
-a{color:inherit}
-:focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:4px}
-.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
-nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;gap:16px;flex-wrap:wrap}
-nav .name{display:flex;align-items:center;gap:12px;font:800 20px var(--display);text-decoration:none}
-.avatar{width:42px;height:42px;border-radius:50%;background:var(--blue);color:var(--blue-ink);display:grid;place-items:center;font:800 15px var(--display)}
-nav ul{display:flex;gap:22px;list-style:none;margin:0;padding:0;font-weight:500}
-nav ul a{text-decoration:none;color:var(--muted)}
-nav ul a:hover{color:var(--ink)}
-.hero{display:grid;grid-template-columns:1.05fr 1fr;gap:48px;align-items:start;padding:40px 0 72px}
-h1{font:800 clamp(2.3rem,5vw,3.7rem)/1.04 var(--display);letter-spacing:-.025em;margin:0 0 22px}
-.lede{font-size:1.15rem;color:var(--muted);max-width:34em;margin:0 0 28px}
-.btns{display:flex;gap:12px;flex-wrap:wrap}
-.btn{display:inline-block;padding:13px 22px;border-radius:10px;font-weight:700;text-decoration:none;border:2px solid var(--blue)}
-.btn.primary{background:var(--blue);color:var(--blue-ink)}
-.btn.ghost{color:var(--ink);border-color:var(--line)}
-.btn:hover{border-color:var(--ink)}
-.facts{margin:26px 0 0;padding:0;list-style:none;color:var(--muted);font-size:.95rem}
-.facts li+li{margin-top:4px}
-
-.demo{background:var(--surface);border:2px solid var(--ink);border-radius:14px;padding:22px}
-.demo h2{font:700 1.05rem var(--display);margin:0 0 4px}
-.demo p.sub{margin:0 0 14px;color:var(--muted);font-size:.92rem}
-.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-.chips button{font:500 .85rem var(--body);padding:7px 13px;border-radius:999px;border:1.5px solid var(--line);background:transparent;color:var(--ink);cursor:pointer}
-.chips button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.label{font:500 .8rem var(--body);color:var(--muted);margin:10px 0 4px}
-pre{margin:0;background:var(--code);border-radius:8px;padding:12px 14px;font:400 .82rem/1.55 var(--mono);white-space:pre-wrap;word-break:break-word;min-height:3.4em}
-.run{margin-top:14px;width:100%;cursor:pointer;font:700 1rem var(--body);padding:12px;border-radius:10px;border:0;background:var(--blue);color:var(--blue-ink)}
-.run:hover{filter:brightness(1.08)}
-#steps{list-style:none;margin:0;padding:0;font-size:.92rem}
-#steps li{display:flex;gap:10px;padding:5px 0;border-bottom:1px solid var(--line)}
-#steps li:last-child{border-bottom:0}
-#steps .m{flex:none;width:1.2em;font-weight:700}
-#steps .pass .m{color:var(--ok)}#steps .fail .m{color:var(--bad)}
-#verdict{margin-top:12px;padding:12px 14px;border-radius:8px;font-weight:700;font-size:.95rem}
-.v-ok{background:var(--ok-bg);color:var(--ok)}.v-warn{background:var(--warn-bg);color:var(--warn)}.v-bad{background:var(--bad-bg);color:var(--bad)}
-.note{font-size:.8rem;color:var(--muted);margin:12px 0 0}
-
-.rule{display:grid;grid-template-columns:repeat(4,1fr);border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);margin:0 0 8px}
-.rule div{padding:22px 18px;border-left:1px solid var(--line);font:800 clamp(1.05rem,2.2vw,1.45rem)/1.15 var(--display);letter-spacing:-.01em}
-.rule div:first-child{border-left:0;padding-left:0}
-.rule small{display:block;margin-top:8px;font:400 .85rem/1.4 var(--body);color:var(--muted);letter-spacing:0}
-
-section{padding:64px 0;border-top:1px solid var(--line)}
-section.first{border-top:0}
-h2.t{font:800 clamp(1.8rem,3.4vw,2.4rem)/1.1 var(--display);letter-spacing:-.02em;margin:0 0 10px}
-.intro{color:var(--muted);max-width:38em;margin:0 0 28px}
-.proj{display:grid;grid-template-columns:1fr 1.4fr;gap:10px 40px;padding:26px 0;border-top:1px solid var(--line)}
-.proj h3{font:700 1.3rem var(--display);margin:0 0 6px}
-.proj .stack{color:var(--muted);font:400 .82rem var(--mono);margin:0 0 10px}
-.proj p{margin:0}
-.flow{display:flex;flex-wrap:wrap;gap:6px 0;align-items:center;margin:12px 0 0;padding:0;list-style:none;font-weight:500;font-size:.86rem}
-.flow li:not(:last-child)::after{content:"\2192";margin:0 9px;color:var(--muted)}
-.flow span{background:var(--code);padding:3px 10px;border-radius:6px}
-.badge{display:inline-block;font-size:.82rem;font-weight:500;padding:3px 10px;border-radius:6px;background:var(--warn-bg);color:var(--warn)}
-.badge.live{background:var(--ok-bg);color:var(--ok);font-weight:700}
-.proj.client{background:var(--surface);border:2px solid var(--ok);border-radius:14px;padding:24px;margin:6px 0}
-dl.skills{display:grid;grid-template-columns:200px 1fr;gap:14px 28px;margin:0}
-dl.skills dt{font:700 1.05rem var(--display)}
-dl.skills dd{margin:0;color:var(--muted)}
-.cols{display:grid;grid-template-columns:1.2fr 1fr;gap:48px}
-.path{list-style:none;margin:0;padding:0 0 0 22px;border-left:2px solid var(--line)}
-.path li{position:relative;padding:0 0 26px 20px}
-.path li::before{content:"";position:absolute;left:-30px;top:8px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:3px solid var(--blue)}
-.path .when{font:500 .85rem var(--mono);color:var(--muted)}
-.path h3{font:700 1.1rem var(--display);margin:2px 0 4px}
-.path p{margin:0;color:var(--muted);max-width:40em;font-size:.97rem}
-.side h3{font:700 1.1rem var(--display);margin:0 0 8px}
-.side ul{margin:0 0 28px;padding-left:18px;color:var(--muted);font-size:.97rem}
-.side li{margin-bottom:6px}
-.contact{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
-footer{padding:36px 0 48px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
-
-@media (max-width:860px){
-  .hero{grid-template-columns:1fr;gap:36px}
-  .proj{grid-template-columns:1fr}
-  .rule{grid-template-columns:1fr 1fr}
-  .rule div{border-top:1px solid var(--line)}
-  .rule div:nth-child(odd){border-left:0;padding-left:0}
-  dl.skills{grid-template-columns:1fr;gap:4px}
-  dl.skills dd{margin-bottom:14px}
-  .cols{grid-template-columns:1fr;gap:12px}
-  body{font-size:16px}
-}
-[hidden]{display:none!important}
-[hidden]{display:none!important}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media(max-width:420px){h1{font-size:47px}.meta-item{padding-right:10px}.meta-item+.meta-item{padding-left:14px}.timeline-item{grid-template-columns:95px 1fr}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <nav>
-    <a class="name" href="#top">Mohd Ahmed</a>
-    <ul>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#path">Background</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
-
-  <header class="hero" id="top">
-    <div>
-      <h1>I build AI workflows that check the AI’s work before anything happens.</h1>
-      <p class="lede">I’m an AI automation engineer building reliable GTM, RevOps and business workflows with n8n, LLMs and APIs. The model reads the messy input. Code and business rules make the decision. A person stays in the loop where it matters.</p>
-      <div class="btns">
-        <a class="btn primary" href="#projects">See my workflows</a>
-        <a class="btn ghost" href="https://wa.me/918588918460?text=Hi%20Mohd%2C%20I%20saw%20your%20portfolio." target="_blank" rel="noopener">WhatsApp me</a>
-      </div>
-      <ul class="facts">
-        <li>Ex-Cognizant software engineer · 14 workflows built · 1 live client</li>
-        <li>Immediate joiner · New Delhi, India · Open to remote</li>
-      </ul>
-    </div>
-
-    <div class="demo" aria-labelledby="demo-title">
-      <h2 id="demo-title">Try the idea: validate an LLM answer</h2>
-      <p class="sub">A simplified version of the check in my invoice auditor. Pick an output, then run it.</p>
-      <div class="chips" id="picks" role="group" aria-label="Sample LLM outputs">
-        <button type="button" data-i="0" aria-pressed="true">Clean answer</button>
-        <button type="button" data-i="1" aria-pressed="false">Wrapped in Markdown</button>
-        <button type="button" data-i="2" aria-pressed="false">Not JSON at all</button>
-      </div>
-      <div class="label">What the model returned</div>
-      <pre id="raw"></pre>
-      <button class="run" type="button" id="run">Run validation</button>
-      <div class="label">What the workflow does</div>
-      <ol id="steps" aria-live="polite"><li><span class="m"></span><span>Waiting to run.</span></li></ol>
-      <div id="verdict" aria-live="polite" hidden></div>
-      <p class="note">Rule used here: under $1,000 is approved automatically, anything else waits for a person.</p>
-    </div>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Mohd Ahmed home">mohd<span>.</span>ahmed</a>
+    <nav class="nav" aria-label="Main navigation">
+      <a href="#work">Work</a><a href="#approach">Approach</a><a href="#about">About</a>
+      <a class="nav-cta" href="#contact">Get in touch ↗</a>
+    </nav>
   </header>
 
-  <div class="rule" aria-label="How every workflow is built">
-    <div>LLM understands.<small>Reads messy emails, contracts, sites and invoices.</small></div>
-    <div>Code validates.<small>Cleans, checks and scores the output.</small></div>
-    <div>Rules decide.<small>Fixed thresholds, so the same input gives the same result.</small></div>
-    <div>n8n orchestrates.<small>Webhooks, APIs, databases, Slack and Gmail.</small></div>
-  </div>
-
-  <section id="projects">
-    <h2 class="t">Workflows I’ve built</h2>
-    <p class="intro">Each one ties to a real business problem. Where a project runs on mock or sample data, I say so.</p>
-    <div class="chips" id="filters" role="group" aria-label="Filter projects">
-      <button type="button" data-f="all" aria-pressed="true">All 14</button>
-      <button type="button" data-f="client" aria-pressed="false">Live client</button>
-      <button type="button" data-f="sales" aria-pressed="false">Sales and RevOps</button>
-      <button type="button" data-f="fin" aria-pressed="false">Finance</button>
-      <button type="button" data-f="it" aria-pressed="false">IT and security</button>
-      <button type="button" data-f="ops" aria-pressed="false">Ops and HR</button>
-    </div>
-    <div id="list"></div>
-  </section>
-
-  <section id="skills">
-    <h2 class="t">What I work with</h2>
-    <p class="intro">Still learning and still breaking things on purpose to see where they fail.</p>
-    <dl class="skills">
-      <dt>Automation</dt><dd>n8n, webhooks, REST APIs (authentication, headers, request bodies, retries), JSON transformation, idempotency and duplicate handling, Gmail, Google Sheets, Drive and Slack integrations</dd>
-      <dt>AI and LLMs</dt><dd>Gemini, OpenAI, Groq, prompt engineering, LangChain, RAG pipelines, AI agents, Pinecone, FAISS, Hugging Face</dd>
-      <dt>Code and data</dt><dd>JavaScript, Python, Java, Spring Boot, FastAPI, SQL, MySQL, PostgreSQL, AWS</dd>
-    </dl>
-  </section>
-
-  <section id="path">
-    <h2 class="t">How I got here</h2>
-    <p class="intro">Backend engineering first, then a move into AI automation.</p>
-    <div class="cols">
-      <ol class="path">
-        <li><span class="when">Dec 2021 – Dec 2022</span><h3>Software Engineer Trainee, Cognizant</h3><p>Built a job portal end to end: registration, job posting and search for job seekers and employers.</p></li>
-        <li><span class="when">Jan 2023 – Mar 2024</span><h3>Junior Software Engineer, Cognizant</h3><p>Backend services in Java, Spring Boot and MySQL on AWS. Debugged integrations, wrote business logic and handled data validation.</p></li>
-        <li><span class="when">Jul 2025 – Nov 2025</span><h3>Java Developer, Jarurat Care Foundation</h3><p>Core Java development, debugging and user support.</p></li>
-        <li><span class="when">Nov 2025 – May 2026</span><h3>Generative AI and LLM Engineering program, SS AI Training Institute</h3><p>LLMs, RAG pipelines, AI agents and vector databases. Built PDF question answering and chatbot projects.</p></li>
-        <li><span class="when">Now</span><h3>Building automation for real problems</h3><p>Moving from prototypes toward live client work, with testing and error handling.</p></li>
-      </ol>
-      <div class="side">
-        <h3>Education</h3>
-        <ul>
-          <li>M.Tech, Computer Science, AKTU Lucknow (2024 – 2026)</li>
-          <li>B.Tech, Computer Science and Engineering, Jamia Hamdard (2017 – 2021)</li>
-        </ul>
-        <h3>Certifications</h3>
-        <ul>
-          <li>Java Developer Internship Certificate</li>
-          <li>Batch Processing with Spring Batch and Spring Boot</li>
-          <li>Learn to Code in Python 3: Beginner to Advanced</li>
-          <li>DeepSeek Mastery: Learn, Automate Tasks, Write Code and More</li>
-          <li>ChatGPT Complete Guide: Learn Midjourney, ChatGPT 4 and More</li>
-        </ul>
+  <main>
+    <section class="hero" style="border:0">
+      <p class="kicker">AI AUTOMATION ENGINEER · NEW DELHI, INDIA</p>
+      <h1>Make AI useful.<br><span class="accent">Make automation</span><br>trustworthy.</h1>
+      <div class="hero-bottom">
+        <p class="intro">I’m Mohd Ahmed. I build AI-powered business workflows where language models interpret messy information, code validates it, and clear business rules control what happens next.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#work">Explore selected work <span class="arrow">↘</span></a>
+          <a class="btn" href="mailto:ahmedsaifi756@gmail.com">Contact me <span class="arrow">↗</span></a>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="contact">
-    <h2 class="t">Let’s talk</h2>
-    <p class="intro">If your team is hiring for AI automation, n8n or workflow work, or you have a manual process eating your team’s time, I’d like to hear about it. I’m happy to walk you through how any of these workflows is built.</p>
-    <div class="contact">
-      <a class="btn primary" href="https://wa.me/918588918460?text=Hi%20Mohd%2C%20I%20saw%20your%20portfolio." target="_blank" rel="noopener">Chat on WhatsApp</a>
-      <a class="btn ghost" href="mailto:ahmedsaifi756@gmail.com">ahmedsaifi756@gmail.com</a>
-      <a class="btn ghost" href="https://www.linkedin.com/in/mohdahmed-30903920a" target="_blank" rel="noopener">Message me on LinkedIn</a>
+    <div class="meta-strip" aria-label="Professional snapshot">
+      <div class="meta-item"><strong>n8n · LLMs · APIs</strong><span>Core toolkit</span></div>
+      <div class="meta-item"><strong>Validation-first</strong><span>Engineering approach</span></div>
+      <div class="meta-item"><strong>Ex-Cognizant</strong><span>Software engineering</span></div>
+      <div class="meta-item"><strong>Available now</strong><span>Immediate joiner</span></div>
     </div>
-  </section>
 
-  <footer>© 2026 Mohd Ahmed</footer>
+    <section id="work">
+      <div class="section-head reveal">
+        <div><p class="eyebrow">01 / Selected work</p><h2>Built around real<br>business problems.</h2></div>
+        <p class="section-note">A selection of workflow builds and prototypes. Each one is designed around a clear boundary between AI interpretation and controlled execution.</p>
+      </div>
+
+      <div class="featured">
+        <article class="project reveal">
+          <div class="project-top"><span class="project-type">Client workflow</span><span class="status">Trial deployment</span></div>
+          <h3>Maktab fee reminders</h3>
+          <p>A local Maktab was checking pending fees manually. The workflow reads the student sheet each morning, filters only outstanding payments, and sends the admin a summary with separate parent reminders.</p>
+          <div class="project-foot"><span class="stack">n8n · Google Sheets · JavaScript · Gmail</span><span class="project-index">01</span></div>
+        </article>
+
+        <article class="project reveal">
+          <div class="project-top"><span class="project-type">GTM / RevOps</span><span class="status">Workflow build</span></div>
+          <h3>Lead enrichment & qualification</h3>
+          <p>Turns a basic inquiry and company URL into a research brief. Gemini extracts business signals; JavaScript applies a fixed scoring rubric; qualified leads are stored and routed with a reviewed reply draft.</p>
+          <div class="project-foot"><span class="stack">n8n · Gemini · PostgreSQL · Slack · Gmail</span><span class="project-index">02</span></div>
+        </article>
+
+        <article class="project reveal">
+          <div class="project-top"><span class="project-type">Sales operations</span><span class="status">Workflow build</span></div>
+          <h3>Grounded sales & compliance gatekeeper</h3>
+          <p>Checks prospect claims against an approved company playbook. A claim without an exact supporting quote is downgraded to missing evidence. Conflicts are held for review instead of becoming risky promises.</p>
+          <div class="project-foot"><span class="stack">n8n · Gemini · JavaScript · Slack · Gmail</span><span class="project-index">03</span></div>
+        </article>
+
+        <article class="project reveal">
+          <div class="project-top"><span class="project-type">Finance operations</span><span class="status">Prototype</span></div>
+          <h3>Payment reconciliation</h3>
+          <p>Calculates payment variance deterministically before AI classifies messy discrepancy metadata. Small, policy-defined exceptions can be routed automatically; larger or unusual cases go to finance for review.</p>
+          <div class="project-foot"><span class="stack">n8n · JavaScript · Gemini · Sheets · Slack</span><span class="project-index">04</span></div>
+        </article>
+
+        <article class="project reveal">
+          <div class="project-top"><span class="project-type">Security operations</span><span class="status">Prototype</span></div>
+          <h3>IT access review & offboarding</h3>
+          <p>Checks employee events, retrieves access data, evaluates policy and flags risk. Duplicate-event handling and human approval protect sensitive access-revocation actions.</p>
+          <div class="project-foot"><span class="stack">n8n · FastAPI · PostgreSQL · JavaScript · LLM</span><span class="project-index">05</span></div>
+        </article>
+
+        <article class="project reveal">
+          <div class="project-top"><span class="project-type">Cloud operations</span><span class="status">Mock API prototype</span></div>
+          <h3>Natural-language cloud provisioning</h3>
+          <p>Converts a plain-English request into structured provisioning parameters, validates them, checks existing environment state, and only then sends the request to a mock provisioning API.</p>
+          <div class="project-foot"><span class="stack">n8n · Gemini · Webhooks · REST API · Sheets</span><span class="project-index">06</span></div>
+        </article>
+      </div>
+
+      <details class="more-work reveal">
+        <summary><span>Explore 6 more workflow builds</span><span>+ EXPAND</span></summary>
+        <div class="compact-list">
+          <article class="compact-item"><h4>Resume screening</h4><p>Extracts resume content, evaluates it against a job description, validates a weighted match score and routes candidates for HR review.</p><span>n8n · Gemini · JavaScript · Drive · Sheets · Slack</span></article>
+          <article class="compact-item"><h4>SaaS license optimization</h4><p>Matches assigned licenses with usage signals and classifies each as KEEP, REVIEW or DATA_CHECK. It flags recommendations; it does not revoke access.</p><span>n8n · JavaScript · PostgreSQL · Slack</span></article>
+          <article class="compact-item"><h4>Lead intake & CRM routing</h4><p>Validates inbound lead details, checks for an existing CRM contact, creates or updates records, and logs an audit entry.</p><span>n8n · LLM · JavaScript · REST APIs · PostgreSQL · Slack</span></article>
+          <article class="compact-item"><h4>Contract renewal risk</h4><p>Extracts renewal terms, validates dates, calculates notice deadlines and routes urgent contracts for attention.</p><span>n8n · Gemini · JavaScript · PostgreSQL · Slack</span></article>
+          <article class="compact-item"><h4>Revenue signal & lead intelligence</h4><p>Turns customer activity into validated signals, applies a weighted priority score and routes accounts to the appropriate queue.</p><span>n8n · Gemini · JavaScript · PostgreSQL · HTTP</span></article>
+          <article class="compact-item"><h4>E-commerce profit & inventory gatekeeper</h4><p>Combines sales, ad and inventory data; calculates profit and stock cover in code; then routes stockout, loss-making and scale signals.</p><span>n8n · Gemini · JavaScript · Sheets · Slack · Gmail</span></article>
+        </div>
+      </details>
+    </section>
+
+    <section id="approach">
+      <div class="principles">
+        <div class="reveal">
+          <p class="eyebrow">02 / How I engineer</p>
+          <h2>AI interprets.<br>Code verifies.<br>Rules control.</h2>
+          <div class="principle-copy">
+            <p>I don’t treat an LLM response as a trusted instruction. I treat it as an input that needs to earn its place in the workflow.</p>
+            <p>The goal is not to add AI everywhere. It is to use AI where language understanding helps, and deterministic logic where consistency, money, security or policy matter.</p>
+          </div>
+        </div>
+        <div class="flow reveal" aria-label="Workflow engineering principles">
+          <div class="flow-row"><span class="flow-num">01</span><strong>Understand</strong><span>LLM / extraction</span></div>
+          <div class="flow-row"><span class="flow-num">02</span><strong>Validate</strong><span>Schema / evidence</span></div>
+          <div class="flow-row"><span class="flow-num">03</span><strong>Decide</strong><span>Code / business rules</span></div>
+          <div class="flow-row"><span class="flow-num">04</span><strong>Orchestrate</strong><span>n8n / APIs</span></div>
+          <div class="flow-row"><span class="flow-num">05</span><strong>Review & record</strong><span>Human / audit trail</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head reveal">
+        <div><p class="eyebrow">03 / Engineering focus</p><h2>The details that<br>make workflows dependable.</h2></div>
+      </div>
+      <div class="capabilities">
+        <div class="cap reveal"><h3>Workflow orchestration</h3><p>n8n, webhooks, REST APIs, HTTP requests, authentication, request/response handling, Gmail, Google Sheets and Slack.</p></div>
+        <div class="cap reveal"><h3>AI & structured extraction</h3><p>Google Gemini, OpenAI, Groq, prompt engineering, structured outputs, LangChain, RAG and retrieval-based workflows.</p></div>
+        <div class="cap reveal"><h3>Control & data layer</h3><p>JavaScript validation, deterministic scoring, duplicate checks, PostgreSQL, API error handling and human-in-the-loop routing.</p></div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="about-grid">
+        <div class="reveal">
+          <p class="eyebrow">04 / Background</p><h2>Software engineering roots.<br>Automation mindset.</h2>
+          <div class="about-copy">
+            <p>Before focusing on AI automation, I worked in software engineering at Cognizant, building and maintaining backend services with Java, Spring Boot and MySQL, with AWS deployment exposure.</p>
+            <p>That experience shaped how I approach workflows today: validate inputs, understand system boundaries, handle failure paths and make decisions traceable.</p>
+            <p>I’m continuing to deepen my work in Generative AI and LLM engineering, with hands-on learning across RAG pipelines, AI agents and vector databases.</p>
+          </div>
+        </div>
+        <div class="timeline reveal">
+          <div class="timeline-item"><time>2025 — 2026</time><div><strong>Generative AI & LLM Engineering</strong><span>SS AI Training Institute · Professional training</span></div></div>
+          <div class="timeline-item"><time>2023 — 2024</time><div><strong>Junior Software Engineer</strong><span>Cognizant · Java, Spring Boot, MySQL, AWS</span></div></div>
+          <div class="timeline-item"><time>2021 — 2022</time><div><strong>Software Engineer Trainee</strong><span>Cognizant · Full-stack training and job portal development</span></div></div>
+          <div class="timeline-item"><time>Education</time><div><strong>M.Tech, Computer Science</strong><span>AKTU · 2024–2026</span></div></div>
+          <div class="timeline-item"><time>Education</time><div><strong>B.Tech, Computer Science & Engineering</strong><span>Jamia Hamdard · 2017–2021</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact" style="border-bottom:0">
+      <div class="contact-inner">
+        <div class="reveal">
+          <p class="eyebrow">05 / Contact</p>
+          <h2>Have a workflow<br>worth making better?</h2>
+          <p>I’m open to AI Automation Engineer, n8n Developer and Workflow Automation opportunities — and to conversations about practical business automation.</p>
+          <div class="contact-actions">
+            <a class="btn primary" href="mailto:ahmedsaifi756@gmail.com">Email me <span class="arrow">↗</span></a>
+            <a class="btn" href="https://www.linkedin.com/in/mohd-ahmed-30903920a" target="_blank" rel="noopener">LinkedIn <span class="arrow">↗</span></a>
+            <a class="btn" href="https://wa.me/918588918460" target="_blank" rel="noopener">WhatsApp <span class="arrow">↗</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer><span>© 2026 Mohd Ahmed · New Delhi, India</span><a href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">BACK TO TOP ↑</a></footer>
 </div>
-
 <script>
-(function(){
-  var P=[
-   {t:"Maktab fee reminder",c:"ops client",s:"n8n · Google Sheets · JavaScript · Gmail",b:["live","Running on a trial basis with a real client"],x:"A local Maktab was checking a sheet and reminding parents about pending fees by hand every day. Every morning at 10 AM the workflow reads the student sheet. If fees are pending, the admin gets a summary and parents get their own message. If nothing is pending, nobody is bothered.",f:"Schedule|Read sheet|Check pending|Build message|Send"},
-   {t:"Invoice auditor",c:"fin",s:"n8n · Gemini · JavaScript · Google Sheets · Gmail",x:"Extracts vendor, amount and category from unstructured invoices. The validation step strips Markdown, cleans currency values and handles different key names. Invoices under $1,000 are approved. Others are marked Pending and management gets an email with the AI’s reasoning.",f:"Extract|Validate|Decide|Approve or escalate"},
-   {t:"Payment reconciliation",c:"fin",s:"n8n · JavaScript · Gemini · Google Sheets · Slack",x:"JavaScript calculates the exact variance against the ledger, so no LLM touches the math. Gemini only classifies the mismatch, such as a gateway fee or partial refund. Under 5% is reconciled automatically. Larger gaps are escalated to the finance manager on Slack with the AI’s reasoning.",f:"Catch payout|Calculate variance|AI triage|Route|Log"},
-   {t:"E-commerce profit and inventory gatekeeper",c:"fin",s:"n8n · Gemini · JavaScript · Google Sheets · Slack · Gmail",b:["","Uses sample data through a webhook, not a live Shopify or Meta connection"],x:"Joins ad spend, sales and inventory by SKU. JavaScript calculates profit, ROAS and days of stock left. Each SKU becomes a stockout risk, a bleeding campaign or a scale winner. Only then does Gemini write the diagnosis and draft a restock order in Gmail.",f:"Merge data|Do the math|AI diagnosis|Route"},
-   {t:"IT access review and offboarding",c:"it",s:"n8n · FastAPI · PostgreSQL · JavaScript · LLM",b:["","Prototype"],x:"When an employee leaves, the workflow pulls their access data, checks it against policy and has an LLM rate how risky it is. The AI never revokes anything. Deterministic rules and a human approval step control that. Duplicate events are caught so access is never revoked twice.",f:"Event|Idempotency check|Policy check|Risk analysis|Human review|Revoke|Audit"},
-   {t:"SaaS license optimization",c:"it",s:"n8n · JavaScript · PostgreSQL · Slack",b:["","Uses simulated SaaS data over REST"],x:"Matches license data with usage data by user and software. Active licenses are marked KEEP, inactive for 60+ days are flagged for REVIEW, and missing data becomes DATA_CHECK instead of being assumed unused. It never revokes access automatically.",f:"Retrieve|Reconcile|Validate|Decide|Persist|Notify"},
-   {t:"Natural language to cloud provisioning",c:"it",s:"n8n · Gemini · JavaScript · Webhooks · REST API · Google Sheets",b:["","Runs against a mock cloud API, not real AWS"],x:"Turns “Create a demo environment for TechCorp, we need S3 and Lambda, this is urgent” into a validated request. It checks Google Sheets for existing environments first, so the same one is never provisioned twice.",f:"Understand|Validate|Check state|Provision"},
-   {t:"Grounded sales and compliance gatekeeper",c:"sales",s:"n8n · Gemini · JavaScript · Slack · Gmail",x:"Breaks a prospect’s message into claims and checks each against the company playbook as SUPPORTED, CONFLICT or MISSING_EVIDENCE. A claim needs an exact quote as proof, or code downgrades it. Conflicts go to the Deal Desk on Slack. Clean ones become a Gmail draft for the rep.",f:"Load playbook|Extract claims|Validate evidence|Route"},
-   {t:"Lead enrichment and qualification",c:"sales",s:"n8n · Gemini · JavaScript · PostgreSQL · Slack · Gmail",x:"Fetches a lead’s company site and Gemini extracts budget, team size, urgency and ICP fit. A fixed JavaScript rubric does the scoring, so the same lead always gets the same score. At 75 or above, the sales team gets a research brief and a personalized Gmail draft.",f:"Scrape site|Extract signals|Score|Store and draft"},
-   {t:"Lead intake and CRM routing",c:"sales",s:"n8n · LLM · JavaScript · REST APIs · PostgreSQL · Slack",x:"Reads an incoming lead, validates the extracted details and qualifies it with rules. Then it searches the CRM by email, updates or creates the contact, logs an audit record and pings Slack. Built to practice authentication, duplicate detection, status codes and retry logic.",f:"Understand|Validate|Qualify|CRM match|Notify"},
-   {t:"Revenue signal scoring",c:"sales",s:"n8n · Gemini · JavaScript · PostgreSQL · HTTP requests",b:["","Prototype: mock endpoint, and the score thresholds are still my best guess"],x:"Turns messy customer activity, like repeated pricing page visits or an upcoming renewal, into a “call this account first” priority. JavaScript calculates a weighted score. PostgreSQL stores every event and catches duplicates so one visit is never counted three times.",f:"Extract|Validate|Score|Route"},
-   {t:"Support ticket triage",c:"ops",s:"n8n · Gemini · JavaScript · Slack · Gmail · Google Sheets",x:"Extracts category, sentiment and urgency from a customer email, then validates it and generates a ticket ID. Routine tickets get an AI-drafted reply saved in Gmail. Angry customers or urgency above 7 are logged in Sheets and alerted to the right team on Slack.",f:"Understand|Validate|Route|Draft or escalate"},
-   {t:"Resume screening",c:"ops",s:"n8n · Gemini · JavaScript · Gmail · Drive · Sheets · Slack",x:"Converts resume PDFs from Gmail to text and has Gemini compare them with the job description. JavaScript calculates a weighted score. At 75% or above, the resume moves to Shortlisted and the hiring manager gets a Slack ping. Otherwise a rejection is drafted for HR to review.",f:"Extract|Evaluate|Validate|Score|Route"},
-   {t:"Contract renewal risk",c:"ops",s:"n8n · AI · JavaScript · PostgreSQL · Slack",x:"AI extracts renewal dates and notice periods from contract data. Validation cleans the output, then code calculates notice deadlines and days remaining. Each contract becomes URGENT_REVIEW, MONITOR or NO_ACTION, and Slack is pinged only for urgent ones.",f:"Extract|Validate|Calculate risk|Log|Notify"}
-  ];
-  var list=document.getElementById('list');
-  function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
-  P.forEach(function(p){
-    var a=document.createElement('article');a.className='proj'+(p.c.indexOf('client')>-1?' client':'');a.dataset.c=p.c;
-    var badge=p.b?'<p style="margin-top:8px"><span class="badge '+(p.b[0]||'')+'">'+esc(p.b[1])+'</span></p>':'';
-    a.innerHTML='<div><h3>'+esc(p.t)+'</h3><p class="stack">'+esc(p.s)+'</p>'+badge+'</div><div><p>'+esc(p.x)+'</p><ul class="flow">'+p.f.split('|').map(function(s){return '<li><span>'+esc(s)+'</span></li>'}).join('')+'</ul></div>';
-    list.appendChild(a);
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target);}
   });
-  document.getElementById('filters').addEventListener('click',function(e){
-    var b=e.target.closest('button');if(!b)return;var f=b.dataset.f;
-    [].forEach.call(this.children,function(x){x.setAttribute('aria-pressed',x===b)});
-    [].forEach.call(list.children,function(a){a.hidden=!(f==='all'||a.dataset.c.split(' ').indexOf(f)>-1)});
-  });
-
-  var samples=[
-    '{"vendor":"Bright Office Co","amount":"$420.50","category":"Supplies"}',
-    '```json\n{"Vendor": "Northwind Traders", "Amount": "USD 4,250.00", "Category": "Equipment"}\n```',
-    'Sure! Here is the invoice data you asked for: the vendor is Acme and the amount is about 900.'
-  ];
-  var cur=0,raw=document.getElementById('raw'),steps=document.getElementById('steps'),verdict=document.getElementById('verdict');
-  function show(){raw.textContent=samples[cur];steps.innerHTML='<li><span class="m"></span><span>Waiting to run.</span></li>';verdict.hidden=true}
-  function step(ok,text){var li=document.createElement('li');li.className=ok?'pass':'fail';li.innerHTML='<span class="m">'+(ok?'\u2713':'\u2717')+'</span><span></span>';li.lastChild.textContent=text;steps.appendChild(li)}
-  function end(cls,text){verdict.className=cls;verdict.textContent=text;verdict.hidden=false}
-  document.getElementById('picks').addEventListener('click',function(e){
-    var b=e.target.closest('button');if(!b)return;cur=+b.dataset.i;
-    [].forEach.call(this.children,function(x){x.setAttribute('aria-pressed',x===b)});show();
-  });
-  document.getElementById('run').addEventListener('click',function(){
-    steps.innerHTML='';verdict.hidden=true;
-    var t=samples[cur],cleaned=t.replace(/```json|```/g,'').trim();
-    step(true,cleaned!==t?'Removed Markdown fences around the JSON':'No Markdown to remove');
-    var obj;
-    try{obj=JSON.parse(cleaned)}catch(err){
-      step(false,'Could not parse the response as JSON');
-      step(true,'Did not guess or continue with bad data');
-      end('v-bad','Held for human review. Nothing was approved.');return;
-    }
-    step(true,'Parsed JSON successfully');
-    var n={};Object.keys(obj).forEach(function(k){n[k.toLowerCase()]=obj[k]});
-    step(true,'Normalised key names (vendor, amount, category)');
-    var amt=parseFloat(String(n.amount).replace(/[^0-9.]/g,''));
-    if(isNaN(amt)){step(false,'Amount is not a number');end('v-bad','Held for human review.');return}
-    step(true,'Cleaned the amount to a number: '+amt.toFixed(2));
-    if(amt<1000){step(true,'Rule check: under $1,000');end('v-ok','Approved for '+n.vendor+'. Database updated.')}
-    else{step(true,'Rule check: $1,000 or more');end('v-warn','Marked Pending. Management gets an email with the reasoning.')}
-  });
-  show();
-})();
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 </script>
 </body>
 </html>
